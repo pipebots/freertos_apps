@@ -1,6 +1,17 @@
-file(GLOB SRCS ${UROS_APP_FOLDER}/*.c*)
-idf_component_register(SRCS main.c microros_transports.c ${SRCS}
-                       INCLUDE_DIRS ".")
+# file(GLOB SRCS ${UROS_APP_FOLDER}/*.c*)
+# idf_component_register(SRCS main.c microros_transports.c ${SRCS}
+#                       INCLUDE_DIRS ".")
+
+# message("PIPEBOTS: UROS_APP_FOLDER: " ${UROS_APP_FOLDER})
+if(DEFINED UROS_APP_FOLDER)
+    include(${UROS_APP_FOLDER}/app.cmake)
+endif()
+# message("PIPEBOTS: UROS_APP_INCLUDES: " ${UROS_APP_INCLUDES})
+# message("PIPEBOTS: UROS_APP_SRCS: " ${UROS_APP_SRCS})
+
+idf_component_register(SRCS main.c microros_transports.c ${UROS_APP_SRCS}
+                       INCLUDE_DIRS "." ${UROS_APP_INCLUDES}
+)
 
 set(EXTENSIONS_DIR ${COMPONENT_DIR}/..)
 set(UROS_DIR       ${COMPONENT_DIR}/../../../mcu_ws)
